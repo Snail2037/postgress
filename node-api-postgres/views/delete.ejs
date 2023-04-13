@@ -1,0 +1,39 @@
+<%- include("header") -%>
+
+<h1> Delete a User </h1>
+
+<form id="deleteUserForm" action="/delete/<%= model.id %>" method="post">
+  <div class="form-horizontal">
+
+    <%- include("display") -%>
+
+    <div class="form-group row">
+      <label class="col-form-label col-sm-2"></label>
+      <div class="col-sm-10">
+        <input type="submit" value="Clear" class="btn btn-default btn-danger" />
+        <a class="btn btn-outline-dark cancel" href="/users">Cancel</a>
+      </div>
+    </div>
+  </div>
+</form>
+
+<%- include("footer") -%>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  const deleteUserForm = document.querySelector('#deleteUserForm');
+  deleteUserForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const id = '<%= model.id %>'; // Get the ID from the EJS template
+    axios.post('/delete', { id: id })
+      .then((response) => {
+        console.log(response);
+	window.location.href = '/users'
+        // Handle success response here
+      })
+      .catch((error) => {
+        console.error(error);
+        // Handle error response here
+      });
+  });
+</script>
